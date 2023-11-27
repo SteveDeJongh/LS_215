@@ -62,9 +62,9 @@ function generateClassRecordSummary(scores) {
 
 function studentGrades(scores) {
   return scores.map(student => {
-    let score = getAverage(student);
-    let grade = getGrade(score);
-    return `${score} (${grade})`;
+    let percentageGrade = getAverage(student);
+    let letterGrade = lookupLetter(percentageGrade);
+    return `${percentageGrade} (${letterGrade})`;
   });
 }
 
@@ -74,7 +74,7 @@ function getAverage(scores) {
   return Math.round(exams + exercises);
 }
 
-function getGrade(grade) {
+function lookupLetter(grade) {
   if (grade >= 93) {
     return 'A';
   } else if (grade >= 85) {
@@ -132,3 +132,78 @@ generateClassRecordSummary(studentScores);
 //     { average: 91.8, minimum: 80, maximum: 100 },
 //   ],
 // }
+
+// LS Solution
+
+function generateClassRecordSummary(scores) {
+  let scoreData = Object.keys(scores).map(student => scores[student].scores);
+  let examData = scoreData.map(score => score.exams);
+
+  return {
+    studentGrades: scoreData.map(scoreObj => getStudentScore(scoreObj)),
+    exams: getExamSummary(examData),
+  };
+}
+
+function getStudentScore(scoreObj) {
+  let lookupLetter = function (percentageGrade) {
+    if (percentageGrade >= 93) {
+      return 'A';
+    } else if (percentageGrade >= 85 && percentageGrade < 93) {
+      return 'B';
+    } else if (percentageGrade >= 77 && percentageGrade < 85) {
+      return 'C';
+    } else if (percentageGrade >= 69 && percentageGrade < 77) {
+      return 'D';
+    } else if (percentageGrade >= 60 && percentageGrade < 69) {
+      return 'E';
+    } else {
+      return 'F';
+    }
+  };
+
+  let examsAvg = computeExamsAverage(scoreObj.exams);
+  let exercisesSum = computeExercisesScore(scoreObj.exercises);
+  let percentageGrade = Math.round(examsAvg * 0.65 + exercisesSum * 0.35);
+
+  return String(percentageGrade) + ' (' + lookupLetter(percentageGrade) + ')';
+}
+
+function computeExamsAverage(exams) {
+  return exams.reduce((total, score) => total + score) / exams.length;
+}
+
+function computeExercisesScore(exercises) {
+  return exercises.reduce((total, score) => total + score);
+}
+
+function getExamSummary(examScoresPerStudent) {
+  let scoresPerExam = transpose(examScoresPerStudent);
+
+  return scoresPerExam.map(examScores => {
+    return {
+      average: parseFloat(getExamAverage(examScores)),
+      minimum: getExamMinimum(examScores),
+      maximum: getExamMaximum(examScores),
+    };
+  });
+}
+
+function transpose(array) {
+  return array[0].map((col, columnIdx) => {
+    return array.map(row => row[columnIdx]);
+  });
+}
+
+function getExamAverage(scores) {
+  return (scores.reduce((total, score) => total + score) / scores.length)
+            .toFixed(1);
+}
+
+function getExamMinimum(scores) {
+  return scores.reduce((min, score) => (min <= score ? min : score));
+}
+
+function getExamMaximum(scores) {
+  return scores.reduce((max, score) => (max >= score ? max : score));
+}
