@@ -69,3 +69,72 @@
 
 // Reduce
 
+// function myReduce(array, func, initial) {
+//   let val;
+
+//   if (initial) {
+//     val = initial;
+//     array.forEach(el => val = func(val, el));
+//   } else {
+//     val = array[0];
+//     array.slice(1).forEach(el => val = func(val, el));
+//   }
+
+//   return val;
+// }
+
+// Cleaner solution:
+
+// function myReduce(array, func, initial) {
+//   let value;
+//   let index;
+
+//   if (initial === undefined) {
+//     value = array[0];
+//     index = 1;
+//   } else {
+//     value = initial;
+//     index = 0;
+//   }
+
+//   array.slice(index).forEach(element => value = func(value, element));
+//   return value;
+// }
+
+// let smallest = (result, value) => (result <= value ? result : value);
+// let sum = (result, value) => result + value;
+
+// myReduce([5, 12, 15, 1, 6], smallest);           // 1
+// myReduce([5, 12, 15, 1, 6], sum, 10);            // 49
+
+// Interrogation
+
+function myOwnEvery(array, func) {
+  let res = true;
+
+  array.forEach((el) => {
+    res = !!func(el);
+    if (!res) {
+      return false;
+    }
+  });
+
+  return res;
+}
+
+let isAString = value => typeof value === 'string';
+myOwnEvery(['a', 'a234', '1abc'], isAString);       // true
+
+// Or using a for Loop
+
+function myOwnEvery(array, func) {
+  for (let i = 0; i < array.length; i += 1) {
+    if (!func(array[i])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+// 
