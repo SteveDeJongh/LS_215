@@ -8,7 +8,7 @@ function totalArea(rectangles) {
   return totalArea;
 }
 
-let rectangles = [[3, 4], [6, 6], [1, 8], [9, 9], [2, 2]];
+// let rectangles = [[3, 4], [6, 6], [1, 8], [9, 9], [2, 2]];
 
 totalArea(rectangles);    // 141
 
