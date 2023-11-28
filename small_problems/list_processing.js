@@ -109,6 +109,262 @@ function sumOfSums(numbers) {
 
 // 5
 
+function leadingSubstrings(string) {
+  let resArr = [];
+  let chars = string.split('');
+
+  for (let end = 0; end < string.length; end += 1) {
+    resArr.push(chars.slice(0, end + 1).join(''))
+  }
+
+  return resArr;
+}
+
 leadingSubstrings('abc');      // ["a", "ab", "abc"]
 leadingSubstrings('a');        // ["a"]
 leadingSubstrings('xyzzy');    // ["x", "xy", "xyz", "xyzz", "xyzzy"]
+
+// LS Solution, using `string.slice`
+
+function leadingSubstrings(string) {
+  let substrings = [];
+  for (let length = 1; length <= string.length; length += 1) {
+    substrings.push(string.slice(0, length));
+  }
+
+  return substrings;
+}
+
+// FE, use a list processing function.
+
+function leadingSubstrings(string) {
+  let chars = string.split('');
+
+  return chars.map((char, idx) => {
+    return string.slice(0, idx + 1);
+  });
+}
+
+// 6
+
+function leadingSubstrings(string) {
+  let substrings = [];
+  for (let length = 1; length <= string.length; length += 1) {
+    substrings.push(string.slice(0, length));
+  }
+
+  return substrings;
+}
+
+
+function substrings(string) {
+  let resArr = [];
+ 
+  for (let start = 0; start < string.length; start += 1) {
+    resArr = resArr.concat(leadingSubstrings(string.slice(start)))
+  };
+
+  return resArr;
+}
+
+substrings('abcde');
+
+// returns
+[ "a", "ab", "abc", "abcd", "abcde",
+  "b", "bc", "bcd", "bcde",
+  "c", "cd", "cde",
+  "d", "de",
+  "e" ]
+
+// LS Solution
+
+function substrings(string) {
+  let substrings = [];
+  for (let startIndex = 0; startIndex < string.length; startIndex += 1) {
+    let substring = string.substring(startIndex);
+    substrings = substrings.concat(leadingSubstrings(substring));
+  }
+
+  return substrings;
+}
+
+function leadingSubstrings(string) {
+  let substrings = [];
+  for (let length = 1; length <= string.length; length += 1) {
+    substrings.push(string.slice(0, length));
+  }
+
+  return substrings;
+}
+
+// FE
+
+function substrings(string) {
+  let chars = string.split('');
+
+  return chars.map((let, index) => {
+    return leadingSubstrings(string.slice(index));
+  }).flat();
+}
+
+// 7
+
+function leadingSubstrings(string) {
+  let substrings = [];
+  for (let length = 1; length <= string.length; length += 1) {
+    substrings.push(string.slice(0, length));
+  }
+
+  return substrings;
+}
+
+function substrings(string) {
+  let resArr = [];
+ 
+  for (let start = 0; start < string.length; start += 1) {
+    resArr = resArr.concat(leadingSubstrings(string.slice(start)))
+  };
+
+  return resArr;
+}
+
+function palindromes(string) {
+  return substrings(string)
+  .filter((str) => {
+    return str.length >= 2 && str === str.split('').reverse().join('');
+  })
+}
+
+palindromes('abcd');       // []
+palindromes('madam');      // [ "madam", "ada" ]
+
+palindromes('hello-madam-did-madam-goodbye');
+// returns
+[ "ll", "-madam-", "-madam-did-madam-", "madam", "madam-did-madam", "ada",
+  "adam-did-mada", "dam-did-mad", "am-did-ma", "m-did-m", "-did-", "did",
+  "-madam-", "madam", "ada", "oo" ]
+
+palindromes('knitting cassettes');
+// returns
+[ "nittin", "itti", "tt", "ss", "settes", "ette", "tt" ]
+
+// LS Solution, moves palindrome check to a separate function and uses it for the filter callback function.
+
+function isPalindrome(word) {
+  return word.length > 1 && word === word.split('').reverse().join('');
+}
+
+function palindromes(string) {
+  return substrings(string).filter(isPalindrome);
+}
+
+// 8
+
+function buyFruit(list) {
+  return list.map(item => {
+    let result = [];
+    for (let i = 0; i < item[1]; i += 1) {
+      result.push(item[0]);
+    }
+    return result;
+  }).flat();
+}
+
+buyFruit([['apple', 3], ['orange', 1], ['banana', 2]]);
+// returns ["apple", "apple", "apple", "orange", "banana", "banana"]
+
+// LS Solution, using reduce.
+
+function buyFruit(fruitsList) {
+  return fruitsList.map(fruit => repeat(fruit))
+                   .reduce((groceryList, fruit) => groceryList.concat(fruit));
+}
+
+function repeat(fruit) {
+  const result = [];
+
+  for (let i = 0; i < fruit[1]; i += 1) {
+    result.push(fruit[0]);
+  }
+
+  return result;
+}
+
+// 9
+
+function transactionsFor(item, list) {
+  return list.filter(transaction => {
+    return transaction.id === item;
+  })
+}
+
+const transactions = [ { id: 101, movement: 'in',  quantity:  5 },
+                       { id: 105, movement: 'in',  quantity: 10 },
+                       { id: 102, movement: 'out', quantity: 17 },
+                       { id: 101, movement: 'in',  quantity: 12 },
+                       { id: 103, movement: 'out', quantity: 15 },
+                       { id: 102, movement: 'out', quantity: 15 },
+                       { id: 105, movement: 'in',  quantity: 25 },
+                       { id: 101, movement: 'out', quantity: 18 },
+                       { id: 102, movement: 'in',  quantity: 22 },
+                       { id: 103, movement: 'out', quantity: 15 }, ];
+
+console.log(transactionsFor(101, transactions));
+// returns
+// [ { id: 101, movement: "in",  quantity:  5 },
+//   { id: 101, movement: "in",  quantity: 12 },
+//   { id: 101, movement: "out", quantity: 18 }, ]
+
+// LS Solution
+
+function transactionsFor(inventoryItem, transactions) {
+  return transactions.filter(({id}) => id === inventoryItem);
+}
+
+// 10
+
+function transactionsFor(inventoryItem, transactions) {
+  return transactions.filter(({id}) => id === inventoryItem);
+}
+
+function isItemAvailable(item, transactions) {
+  let itemTransactions = transactionsFor(item, transactions);
+  let movements = itemTransactions.map((trans) => {
+    if (trans.movement === 'in') {
+      return trans.quantity;
+    } else {
+      return -trans.quantity
+    }
+  });
+
+  let stock = movements.reduce((sum, val) => sum += val);
+  return stock > 0;
+}
+
+const transactions = [ { id: 101, movement: 'in',  quantity:  5 },
+                       { id: 105, movement: 'in',  quantity: 10 },
+                       { id: 102, movement: 'out', quantity: 17 },
+                       { id: 101, movement: 'in',  quantity: 12 },
+                       { id: 103, movement: 'out', quantity: 15 },
+                       { id: 102, movement: 'out', quantity: 15 },
+                       { id: 105, movement: 'in',  quantity: 25 },
+                       { id: 101, movement: 'out', quantity: 18 },
+                       { id: 102, movement: 'in',  quantity: 22 },
+                       { id: 103, movement: 'out', quantity: 15 }, ];
+
+isItemAvailable(101, transactions);     // false
+isItemAvailable(105, transactions);     // true
+
+// LS Solution, combines my map and reduce functions on the items.
+
+function isItemAvailable(item, transactions) {
+  const quantity = transactionsFor(item, transactions).reduce((sum, transaction) => {
+    if (transaction.movement === 'in') {
+      return sum + transaction.quantity;
+    } else {
+      return sum - transaction.quantity;
+    }
+  }, 0);
+
+  return quantity > 0;
+}
