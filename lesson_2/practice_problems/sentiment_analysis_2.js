@@ -1,4 +1,4 @@
-// LS215 - Lesson 2 - Sentiment Analysis 1
+// LS215 - Lesson 2 - Sentiment Analysis 2
 
 let textExcerpt = 'To be or not to be-that is the question:\n' +
   'Whether \'tis nobler in the mind to suffer\n' +
@@ -36,70 +36,19 @@ let textExcerpt = 'To be or not to be-that is the question:\n' +
   'The fair Ophelia.-Nymph, in thy orisons\n' +
   'Be all my sins remembered';
 
-let positiveWords = ['fortune', 'dream', 'love', 'respect', 'patience', 'devout', 'noble', 'resolution'];
-let negativeWords = ['die', 'heartache', 'death', 'despise', 'scorn', 'weary', 'trouble', 'oppress'];
-
-function sentiment(text) {
-  let words = text.split(/[^a-z]/i);
-
-  let positive = findPositives(words);
-  let negative = findNegatives(words);
-  let sentiment = getSentiment(positive[0], negative[0]);
-
-  console.log(`There are ${positive[0]} positive words in the text.\n` +
-              `Positive sentiments: ${positive[1].join(', ')}.\n` +
-              `\n` +
-              `There are ${negative[0]} negative words in the text.\n` +
-              `Negative sentiments: ${negative[1].join(', ')}.\n` +
-              `\n` +
-              `The sentiment of the text is ${sentiment}.`)
-}
-
-function findPositives(words) {
-  let positive = words.filter(word => {
-    return positiveWords.includes(word);
-  })
-
-  return [positive.length, positive]
-}
-
-function findNegatives(words) {
-  let negatives = words.filter(word => {
-    return negativeWords.includes(word);
-  })
-
-  return [negatives.length, negatives]
-}
-
-function getSentiment(pos, neg) {
-  if (pos > neg) {
-    return 'Positive';
-  } else if (pos < neg) {
-    return 'Negative';
-  } else {
-    return 'Neutral';
-  }
-}
-
-sentiment(textExcerpt);
-
-// console output
-
-There are 5 positive words in the text.
-Positive sentiments: fortune, dream, respect, love, resolution
-
-There are 6 negative words in the text.
-Negative sentiments: die, heartache, die, death, weary, death
-
-The sentiment of the text is Negative.
-
-// LS Solution
+let positiveRegex = /\bfortunes?\b|\bdream(s|t|ed)?\b|love(s|d)?\b|respect(s|ed)?\b|\bpatien(ce|t)?\b|\bdevout(ly)?\b|\bnobler?\b|\bresolut(e|ion)?\b/gi;
+let negativeRegex = /\bdie(s|d)?\b|\bheartached?\b|death|despise(s|d)?\b|\bscorn(s|ed)?\b|\bweary\b|\btroubles?\b|\boppress(es|ed|or('s)?)?\b/gi;
 
 function sentiment(text) {
   let wordList = text.toLowerCase().match(/[a-z']+/g);
 
-  let positives = wordList.filter(word => positiveWords.indexOf(word) >= 0);
-  let negatives = wordList.filter(word => negativeWords.indexOf(word) >= 0);
+  let positives = wordList.filter(word => word.match(positiveRegex));
+  let negatives = wordList.filter(word => word.match(negativeRegex));
+  /*
+  // Alternatively, working with the original text as is, and ensuring the returned array of works is lowercase.
+  let positives = text.match(positiveRegex).map(toLowerCaseWord);
+  let negatives = text.match(negativeRegex).map(toLowerCaseWord);
+  */
 
   console.log('There are ' + String(positives.length) + ' positive words in the text.');
   console.log('Positive sentiments: ' + positives.join(', '));
@@ -119,3 +68,15 @@ function sentiment(text) {
 
   console.log('The sentiment of the text is ' + textSentiment + '.');
 }
+
+sentiment(textExcerpt);
+
+// console output
+
+There are 9 positive type words in the text.
+Positive sentiments: nobler, fortune, devoutly, dream, dreams, respect, love, patient, resolution
+
+There are 10 negative type words in the text.
+Negative sentiments: troubles, die, heartache, die, death, scorns, oppressor's, despised, weary, death
+
+The sentiment of the text is Negative.
