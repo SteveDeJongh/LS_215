@@ -1,14 +1,14 @@
 // LS215 - Lesson 2 - Mail Count
 
-function mailCount(emailData) {
-  let emails = emailData.split('##||##\n\n').map(email => email.split('#/#\n'));
-  let dates = emails.map(email => new Date(email[2].match(/\d\d-\d\d-\d\d\d\d/)));
-  dates.sort((a, b) => a - b);
-  console.log(`Count of Email: ${emails.length}`);
-  console.log(`Date Range: ${dates[0]} - ${dates[dates.length - 1]}`);
-}
+// function mailCount(emailData) {
+//   let emails = emailData.split('##||##\n\n').map(email => email.split('#/#\n'));
+//   let dates = emails.map(email => new Date(email[2].match(/\d\d-\d\d-\d\d\d\d/)));
+//   dates.sort((a, b) => a - b);
+//   console.log(`Count of Email: ${emails.length}`);
+//   console.log(`Date Range: ${dates[0]} - ${dates[dates.length - 1]}`);
+// }
 
-mailCount(emailData);
+// mailCount(emailData);
 
 // console output
 
@@ -41,3 +41,5 @@ function getDateObjects(dates) {
     return new Date(year, month, day);
   });
 }
+
+mailCount(emailData);
