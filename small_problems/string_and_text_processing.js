@@ -89,3 +89,143 @@ function letterCaseCount(string) {
 
 // 4
 
+function wordCap(string) {
+  string = string.toLowerCase();
+
+  let words = string.split(' ');
+  words = words.map(word => word[0].toUpperCase() + word.slice(1));
+  return words.join(' ');
+}
+
+wordCap('four score and seven');       // "Four Score And Seven"
+wordCap('the javaScript language');    // "The Javascript Language"
+wordCap('this is a "quoted" word');    // 'This Is A "quoted" Word'
+
+// LS Solution
+
+function wordCap(words) {
+  return words.split(' ')
+              .map(word => word.slice(0, 1).toUpperCase() + word.slice(1).toLowerCase())
+              .join(' ');
+}
+
+// 5
+
+// function swapCase(string) {
+//   let chars = string.split('');
+
+//   chars = chars.map(char => {
+//     if (/[a-z]/.test(char)) {
+//       return char.toUpperCase();
+//     } else if (/[A-Z]/.test(char)) {
+//       return char.toLowerCase();
+//     } else {
+//       return char;
+//     }
+//   });
+
+//   return chars.join('');
+// }
+
+// Re formatted.
+
+function swapCase(string) {
+  return string.split('')
+               .map(char => {
+                  if (/[a-z]/.test(char)) {
+                    return char.toUpperCase();
+                  } else if (/[A-Z]/.test(char)) {
+                    return char.toLowerCase();
+                  } else {
+                    return char;
+                  }
+                })
+                .join('');
+}
+
+swapCase('CamelCase');              // "cAMELcASE"
+swapCase('Tonight on XYZ-TV');      // "tONIGHT ON xyz-tv"
+
+// 6
+
+function staggeredCase(string) {
+  let chars = string.split('');
+
+  return chars.map((char, idx) => {
+    if (idx % 2 === 0) {
+      return char.toUpperCase();
+    } else {
+      return char.toLowerCase();
+    }
+  }).join('');
+}
+
+staggeredCase('I Love Launch School!');        // "I LoVe lAuNcH ScHoOl!"
+staggeredCase('ALL_CAPS');                     // "AlL_CaPs"
+staggeredCase('ignore 77 the 4444 numbers');   // "IgNoRe 77 ThE 4444 nUmBeRs"
+
+// 7
+
+function staggeredCase(string) {
+  let chars = string.split('');
+  let whichCase = true;
+
+  return chars.map(char => {
+    if (whichCase && /[a-z]/i.test(char)) {
+      whichCase = false;
+      return char.toUpperCase();
+    } else if (/[a-z]/i.test(char)) {
+      whichCase = true;
+      return char.toLowerCase();
+    } else {
+      return char;
+    }
+  }).join('');
+}
+
+staggeredCase('I Love Launch School!');        // "I lOvE lAuNcH sChOoL!"
+staggeredCase('ALL CAPS');                     // "AlL cApS"
+staggeredCase('ignore 77 the 444 numbers');    // "IgNoRe 77 ThE 444 nUmBeRs"
+
+// LS Solution
+
+function staggeredCase(string) {
+  let needUpper = true;
+  let newChar;
+
+  return string.split('').map(char => {
+    if (char.match(/[a-z]/i)) {
+      if (needUpper) {
+        newChar = char.toUpperCase();
+      } else {
+        newChar = char.toLowerCase();
+      }
+
+      needUpper = !needUpper;
+      return newChar;
+    } else {
+      return char;
+    }
+  }).join('');
+}
+
+// 8
+
+function wordLengths(string) {
+  
+}
+
+wordLengths('cow sheep chicken');
+// ["cow 3", "sheep 5", "chicken 7"]
+
+wordLengths('baseball hot dogs and apple pie');
+// ["baseball 8", "hot 3", "dogs 4", "and 3", "apple 5", "pie 3"]
+
+wordLengths("It ain't easy, is it?");
+// ["It 2", "ain't 5", "easy, 5", "is 2", "it? 3"]
+
+wordLengths('Supercalifragilisticexpialidocious');
+// ["Supercalifragilisticexpialidocious 34"]
+
+wordLengths('');      // []
+wordLengths();        // []
