@@ -32,14 +32,17 @@ let longText = 'Four score and seven years ago our fathers brought forth' +
 
 function longestSentence(text) {
   let sentences = text.split(/(?<=[!.?])/g) // Split text after '!', '.' or '?'
-                  .map(sentence => {
-                    sentence = sentence.trim() // Trim whitespace around string.
-                    return [wordCount(sentence), sentence];
-                  })
+                  .map(sentence => countAndSentenceArray(sentence))
                   .sort((a,b) => b[0] - a[0])
 
   console.log(sentences[0][1]);
+  console.log('');
   console.log(`The longest sentence has ${sentences[0][0]} words.`);
+}
+
+function countAndSentenceArray(sentence) {
+  sentence = sentence.trim() // Trim whitespace around string.
+  return [wordCount(sentence), sentence];
 }
 
 function wordCount(text) {
@@ -62,3 +65,24 @@ longestSentence(longText);
 Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in liberty, and dedicated to the proposition that all men are created equal.
 
 The longest sentence has 30 words.
+
+// LS Solution
+
+function longestSentence(text) {
+  let sentenceArray = text.match(/\w[^.!?]*[.!?]/g);
+
+  let longest = sentenceArray.reduce((longest, currentSentence) => {
+    if (wordCount(longest) > wordCount(currentSentence)) {
+      return longest;
+    } else {
+      return currentSentence;
+    }
+  });
+
+  console.log(longest);
+  console.log('The longest sentence has ' + String(wordCount(longest)) + ' words.');
+}
+
+function wordCount(sentence) {
+  return sentence.split(/\s+/).length;
+}
