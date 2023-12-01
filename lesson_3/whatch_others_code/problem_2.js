@@ -82,6 +82,46 @@
 
 // Instead of iterating from back to front, we could also just iterate a reversed array, and use map to do the conversion and track index.
 
+// function isValidNumber(input) {
+//   if (!input) { // Depends on how falsy input values should be handled.
+//     return false;
+//   }
+
+//   input = input.replace(/[^0-9]/g, "");
+
+//   let digits = input.split('').map(Number).reverse();
+
+//   digits = digits.map((num, idx) => {
+//     if (idx % 2 === 0 || idx === 0) {
+//       return num;
+//     }
+
+//     return num * 2 >= 10 ? (num * 2)-9 : (num*2);
+//   })
+
+//   let sum = digits.reduce((sum, val) => sum += val, 0);
+
+//   return sum % 10 === 0;
+// }
+
+// console.log(isValidNumber('1111'));                // False
+// console.log(isValidNumber('8763'));                // True
+// console.log(isValidNumber('abc8763'));             // True
+// console.log(isValidNumber('2323 2005 7766 3554')); // True
+// console.log(isValidNumber(''));                    // False // Depends on how empty strings should be handled.
+
+// FE, 
+
+// Write a function that can add a check digit to make the number valid per the luhn formula and return the orginal number plus that digit. This give "2323 2885 7766 355" => "2323 2885 7766 3554".
+
+function isValidNumberWithCheck(input) {
+  for (let i = 0; i < 10; i += 1) {
+    if (isValidNumber(input+i.toString())) {
+      return input + i.toString();
+    }
+  }
+}
+
 function isValidNumber(input) {
   if (!input) { // Depends on how falsy input values should be handled.
     return false;
@@ -104,8 +144,6 @@ function isValidNumber(input) {
   return sum % 10 === 0;
 }
 
-console.log(isValidNumber('1111'));                // False
-console.log(isValidNumber('8763'));                // True
-console.log(isValidNumber('abc8763'));             // True
-console.log(isValidNumber('2323 2005 7766 3554')); // True
-console.log(isValidNumber(''));                    // False // Depends on how empty strings should be handled.
+console.log(isValidNumberWithCheck("2323 2005 7766 355")); // "2323 2005 7766 3554
+console.log(isValidNumberWithCheck('1111')); // 11114
+console.log(isValidNumberWithCheck('2324')); // 23242
