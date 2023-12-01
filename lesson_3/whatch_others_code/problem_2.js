@@ -56,24 +56,48 @@
 // check modulo of sum by 10 against 0
 // return value of check.
 
+// function isValidNumber(input) {
+//   if (input == false) { // Depends on how falsy input values should be handled.
+//     return false;
+//   }
+
+//   input = input.replace(/[^0-9]/g, "");
+
+//   let digits = input.split('').map(Number);
+
+//   for (let i = digits.length - 2; i >= 0; i -= 2) {
+//     let val = digits[i] * 2;
+
+//     if (val >= 10) {
+//       val -= 9;
+//     }
+
+//     digits[i] = val;
+//   }
+
+//   let sum = digits.reduce((sum, val) => sum += val, 0);
+
+//   return sum % 10 === 0;
+// }
+
+// Instead of iterating from back to front, we could also just iterate a reversed array, and use map to do the conversion and track index.
+
 function isValidNumber(input) {
-  if (input == false) { // Depends on how falsy input values should be handled.
+  if (!input) { // Depends on how falsy input values should be handled.
     return false;
   }
 
   input = input.replace(/[^0-9]/g, "");
 
-  let digits = input.split('').map(Number);
+  let digits = input.split('').map(Number).reverse();
 
-  for (let i = digits.length - 2; i >= 0; i -= 2) {
-    let val = digits[i] * 2;
-
-    if (val >= 10) {
-      val -= 9;
+  digits = digits.map((num, idx) => {
+    if (idx % 2 === 0 || idx === 0) {
+      return num;
     }
 
-    digits[i] = val;
-  }
+    return num * 2 >= 10 ? (num * 2)-9 : (num*2);
+  })
 
   let sum = digits.reduce((sum, val) => sum += val, 0);
 
