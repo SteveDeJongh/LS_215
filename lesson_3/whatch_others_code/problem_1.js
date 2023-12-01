@@ -55,21 +55,30 @@
 // Code:
 
 function cleanPhoneNumber(phone) {
-  let invalidNumber = '000000000000';
+  let invalidNumber = '0000000000';
   if (phone.match(/[^0-9\.\-()]/)) {
     return invalidNumber;
   }
 
   phone = phone.replace(/[\.\-() ]/g, "")
 
-  if (phone.length > 11 || phone.length < 10) {
-    return invalidNumber;
-  } else if (phone.length === 11) {
-    if (phone[0] === '1') {
-      return phone.slice(1);
-    }
-  } else {
+  // if (phone.length > 11 || phone.length < 10) {
+  //   return invalidNumber;
+  // } else if (phone.length === 11) {
+  //   if (phone[0] === '1') {
+  //     return phone.slice(1);
+  //   }
+  // } else {
+  //   return phone;
+  // }
+
+  // Refactored if statement.
+  if (phone.length === 10) {
     return phone;
+  } else if (phone.length === 11 && phone[0] === '1') {
+    return phone.slice(1);
+  } else {
+    return invalidNumber
   }
 }
 
