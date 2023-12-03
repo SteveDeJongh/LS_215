@@ -30,6 +30,8 @@ let longText = 'Four score and seven years ago our fathers brought forth' +
   ' the people, for the people, shall not perish from the' +
   ' earth.';
 
+// Orignal solution, failed edge case:
+
 function longestSentence(text) {
   let sentences = text.split(/(?<=[!.?])/g) // Split text after '!', '.' or '?'
                   .map(sentence => countAndSentenceArray(sentence))
@@ -51,38 +53,79 @@ function wordCount(text) {
 
 longestSentence(longText);
 
-// console output
-It is rather for us to be here dedicated to the great task remaining before us -- that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion -- that we here highly resolve that these dead shall not have died in vain -- that this nation, under God, shall have a new birth of freedom -- and that government of the people, by the people, for the people, shall not perish from the earth.
+// Modified solution to handle edge case.
 
-The longest sentence has 86 words.
+function longestSentence(text) {
+  let sentences = text.split(/(?<=[!.?])/g) // Split text after '!', '.' or '?'
+                  .map(sentence => countAndSentenceArray(sentence))
+                  .sort((a,b) => b[0] - a[0])
 
+  let numOfWords = sentences[0][0];
+  let longestSentences = [];
+  sentences.forEach((sentData) => {
+    if (sentData[0] === numOfWords) {
+      longestSentences.push(sentData[1]);
+    }
+  })
 
-// Assuming the last sentence is removed:
+  console.log(longestSentences.join(' *OR *'));
+  console.log('');
+  console.log(`The longest sentence has ${numOfWords} words.`);
+}
+
+function countAndSentenceArray(sentence) {
+  sentence = sentence.trim() // Trim whitespace around string.
+  return [wordCount(sentence), sentence];
+}
+
+function wordCount(text) {
+  return text.split(' ')
+             .map((word) => {
+               return (word.length > 0) ? 1 : 0;
+             })
+             .reduce((sum, num) => sum += num);
+}
 
 longestSentence(longText);
 
 // console output
-Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in liberty, and dedicated to the proposition that all men are created equal.
+// It is rather for us to be here dedicated to the great task remaining before us -- that from these honored dead we take increased devotion to that cause for which they gave the last full measure of devotion -- that we here highly resolve that these dead shall not have died in vain -- that this nation, under God, shall have a new birth of freedom -- and that government of the people, by the people, for the people, shall not perish from the earth.
 
-The longest sentence has 30 words.
+// The longest sentence has 86 words.
+
+
+// Assuming the last sentence is removed:
+
+// longestSentence(longText);
+
+// console output
+// Four score and seven years ago our fathers brought forth on this continent a new nation, conceived in liberty, and dedicated to the proposition that all men are created equal.
+
+// The longest sentence has 30 words.
+
+longestSentence("Hello there! Why  not? Goodbye.");
+// expected output:
+// Hello there! *OR* Why  not?
+
+// The longest sentence has 2 words.
 
 // LS Solution
 
-function longestSentence(text) {
-  let sentenceArray = text.match(/\w[^.!?]*[.!?]/g);
+// function longestSentence(text) {
+//   let sentenceArray = text.match(/\w[^.!?]*[.!?]/g);
 
-  let longest = sentenceArray.reduce((longest, currentSentence) => {
-    if (wordCount(longest) > wordCount(currentSentence)) {
-      return longest;
-    } else {
-      return currentSentence;
-    }
-  });
+//   let longest = sentenceArray.reduce((longest, currentSentence) => {
+//     if (wordCount(longest) > wordCount(currentSentence)) {
+//       return longest;
+//     } else {
+//       return currentSentence;
+//     }
+//   });
 
-  console.log(longest);
-  console.log('The longest sentence has ' + String(wordCount(longest)) + ' words.');
-}
+//   console.log(longest);
+//   console.log('The longest sentence has ' + String(wordCount(longest)) + ' words.');
+// }
 
-function wordCount(sentence) {
-  return sentence.split(/\s+/).length;
-}
+// function wordCount(sentence) {
+//   return sentence.split(/\s+/).length;
+// }
