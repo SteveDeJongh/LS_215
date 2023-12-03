@@ -44,7 +44,7 @@
 // Convert input string to upper case and split into chars.
 // create a used block array.
 
-let blocks = [['B', 'O'], ['X', 'K'], ['D', 'Q'], ['C', 'P'], ['N', 'A'], ['G', 'T'], ['R', 'E'], ['F', 'S'], ['J', 'W'], ['H', 'U'], ['V', 'I'], ['L', 'Y'], ['Z', 'M']];
+let spellingBlocks = [['B', 'O'], ['X', 'K'], ['D', 'Q'], ['C', 'P'], ['N', 'A'], ['G', 'T'], ['R', 'E'], ['F', 'S'], ['J', 'W'], ['H', 'U'], ['V', 'I'], ['L', 'Y'], ['Z', 'M']];
 
 function isBlockWord(word) {
   word = word.toUpperCase().split('');
@@ -57,7 +57,7 @@ function isBlockWord(word) {
     if (searchForBlock(char, usedBlocks)) {
       return false
     } else {
-      usedBlocks.push(searchForBlock(char, blocks))
+      usedBlocks.push(searchForBlock(char, spellingBlocks))
     }
   };
 
