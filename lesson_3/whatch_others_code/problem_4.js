@@ -45,14 +45,12 @@
     // pass these two element to the helper function to return the numbers for that range.
 
     // Helper function to return all numbers of a range.
-    // ??????
       // loop from start number up to and inlcude last number
       // return array of those numbers
 
 // Split input string into individual numbers (',')
 // initialize an empty array to hold all result numbers
 // initialize a variable to store the current "max number" 
-      // ***** How do i determine starting number??? *****
   // For each "number", check if they split on a range divider
     // split the number into an array on (:..-)
   // if they dont (resulting array is only 1 element):
@@ -73,10 +71,15 @@
   // break when the last x digits match the significant part.
   // return number.
 
+// Potential Alternate Approach:
+
+// First convert all numbers to full integers of increasing value
+// then worry about how to expand ranges.
+
 
 function allNumbers(stringInput) {
   stringInput = stringInput.replace(/ /, "");
-  stringNumbers = stringInput.split(',');
+  let stringNumbers = stringInput.split(',');
   let currentMaxNumber = Number(stringInput.split(',')[0].split(/\.\.|-|:/)[0]);
   let resultNumbers = [];
 
