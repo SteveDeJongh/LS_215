@@ -58,13 +58,13 @@ function caesarEncrypt(string, cipher) {
 
     if (charCode >= lowerCaseMin && charCode <= lowerCaseMax) {
       charCode += cipher;
-      if (charCode > lowerCaseMax) {
+      while (charCode > lowerCaseMax) {
         charCode -= alphabetCount;
       }
       return String.fromCharCode(charCode);
     } else if (charCode >= upperCaseMin && charCode <= upperCaseMax) {
       charCode += cipher;
-      if (charCode > upperCaseMax) {
+      while (charCode > upperCaseMax) {
         charCode -= alphabetCount;
       }
       return String.fromCharCode(charCode);
@@ -72,4 +72,64 @@ function caesarEncrypt(string, cipher) {
       return let;
     }
   }).join('');
+}
+
+// LS Solution
+
+function caesarEncrypt(plaintext, key) {
+  const upperAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const lowerAlphabet = 'abcdefghijklmnopqrstuvwxyz';
+  let ciphertext = '';
+
+  plaintext.split('').forEach(char => {
+    if (char >= 'A' && char <= 'Z') {
+      ciphertext += encrypt(char, key, upperAlphabet);
+    } else if (char >= 'a' && char <= 'z') {
+      ciphertext += encrypt(char, key, lowerAlphabet);
+    } else {
+      ciphertext += char;
+    }
+  });
+
+  return ciphertext;
+}
+
+function encrypt(letter, key, alphabet) {
+  const letterPos = alphabet.indexOf(letter);
+
+  for (let step = 1; step <= key; step += 1) {
+    if (!alphabet[letterPos + step]) {
+      alphabet += alphabet;
+    }
+
+    letter = alphabet[letterPos + step];
+  }
+
+  return letter;
+}
+
+// Alternate LS Solution, also using charCodeAt
+
+function caesarEncrypt(plaintext, key) {
+  let ciphertext = '';
+
+  plaintext.split('').forEach(char => {
+    if (char >= 'A' && char <= 'Z') {
+      ciphertext += encrypt(char, key, 'upper');
+    } else if (char >= 'a' && char <= 'z') {
+      ciphertext += encrypt(char, key, 'lower');
+    } else {
+      ciphertext += char;
+    }
+  });
+
+  return ciphertext;
+}
+
+function encrypt(letter, key, letterCase) {
+  const base = letterCase === 'upper' ? 65 : 97;
+  const charCode = letter.charCodeAt(0) - base;
+  const shifted = (charCode + key) % 26;
+
+  return String.fromCharCode(shifted + base);
 }
