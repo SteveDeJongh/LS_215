@@ -1,4 +1,4 @@
-// JS210 - Small Problems - Interpretive Problem Solving - Problem 1 - Diamonds
+// JS210 - Small Problems - Interpretive Problem Solving - Problem 2 - Diamonds
 
 // Problem:
 // Input: integer
@@ -67,4 +67,36 @@ function diamond(input) {
   results.forEach(line => {
     console.log(line);
   })
+}
+
+// LS Solution
+
+function diamond(n) {
+  numberSequence(n).forEach(number => {
+    console.log(repeat(' ', (n - number) / 2) + repeat('*', number));
+  });
+}
+
+function numberSequence(n) {
+  const result = [];
+  let increment = 2;
+
+  for (let number = 1; number > 0; number += increment) {
+    result.push(number);
+    if (number === n) {
+      increment = -2;
+    }
+  }
+
+  return result;
+}
+
+function repeat(char, times) {
+  let repeated = '';
+
+  for (let i = 0; i < times; i += 1) {
+    repeated += char;
+  }
+
+  return repeated;
 }
