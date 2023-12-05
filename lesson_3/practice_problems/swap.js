@@ -35,13 +35,6 @@
 // string
 // arrays of letters and numbers
 
-// Algorithm:
-
-// initialize array of letters from input
-// initialize array of digits from input
-
-
-
 function swap(str) {
   let digits = str.match(/[0-9]/g) || [];
   let letters = str.match(/[a-zA-Z]/g) || [];
@@ -72,3 +65,27 @@ console.log(swap("abcd") === "abcd"); // true
 console.log(swap("1") === "1"); // true
 console.log(swap("123-4a#b$") === "ab3-41#2$"); // true
 console.log(swap("ab1CD23") === "12a3DbC"); // true
+
+// LS Solution
+
+const isLetter = char => /[a-z]/i.test(char);
+const isDigit = char => /\d/i.test(char);
+
+function swap(str) {
+  if (str.length === 0) return str;
+
+  const chars = str.split("");
+  const letters = chars.filter(isLetter);
+  const nums = chars.filter(isDigit);
+
+  if (letters.length === 0 || nums.length === 0) return str;
+
+  const swapped = chars.map(char => {
+    if (isLetter(char) && nums.length > 0) return nums.shift();
+    else if (isDigit(char) && letters.length > 0) return letters.shift();
+
+    return char;
+  });
+
+  return swapped.join("");
+}
