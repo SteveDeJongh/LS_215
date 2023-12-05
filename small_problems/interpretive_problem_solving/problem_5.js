@@ -52,6 +52,11 @@ function vigenere(string, keyword) {
 console.log(vigenere("Pineapples don't go on pizzas!", "meat")); //
 // Bmnxmtpeqw dhz'x gh ar pbldal!
 
+console.log(vigenere("Pineapples don't go on pizzas!", "Aa")); //
+// result: Pineapples don't go on pizzas!
+console.log(vigenere("Pineapples don't go on pizzas!", "cab")); //
+// result: Riogaqrlfu dpp't hq oo riabat!
+
 function caesarEncrypt(string, cipher) {
   const alphabetCount = 26;
   const lowerCaseMin = 97;
