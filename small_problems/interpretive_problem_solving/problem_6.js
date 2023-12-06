@@ -50,18 +50,21 @@
 
 // Code
 
+// Implementation was thinking we needed to add blank rows between rows of stars, could be cleaner if refactored knowing those empty rows are not required.
+
 function star(n) {
   let rows = n - 1;
   let result = [];
   let spaces = (n - 3) / 2;
+  let padAmount = 0;
 
   for (let i = 1; i <= rows; i += 2) {
     let currString = `*${' '.repeat(spaces)}*${' '.repeat(spaces)}*`;
-    let countah = (n - currString.length) / 2;
-    let padding = " ".repeat(countah);
+    let padding = " ".repeat(padAmount);
     spaces -= 1;
+    padAmount += 1;
     currString = padding + currString;
-    result.push(currString, " ".repeat(n));
+    result.push(currString);
   }
 
   let reverse = result.slice(0).reverse();
