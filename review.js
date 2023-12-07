@@ -87,4 +87,82 @@ console.log(distinctString([1, 2, 2, 3, 4, 4, 5], 2)); // 3 /// ?????
 
 /*
 
+Given an array of integers, nums, return the third largest number in the array. If the third largest number does not exist, return the greatest number.
+
+You are not allowed to sort the array.
+
+Example
+
+thirdMax([3, 2, 1]); // 1
+
+
+Problem:
+Input: array of numbers
+Output: 3rd largest number in the array, or largest number
+Rules:
+  Can not sort the array
+  if input is less than 3 numbers long, return largest number
+  
+Questions:
+Will we always be passed in an array?
+  If not, what should we do?
+Will the array always only contain numbers?
+  Are string representation of numbers valid?
+Is greater than in value or in length?
+
+Examples:
+thirdMax([3, 2, 1]);              // 1
+thirdMax([3, 2, 1, 4]);           // 2
+thirdMax([2, 1]);                 // 2
+thirdMax([]);                     // 0
+thirdMax('');                     // 0
+
+Data Structure:
+Array
+
+Algorithm:
+check if input is valid, if not, return 0
+initialize a largest variable to an empty array of three 0s
+iterate over each element in passed in array.
+If the number is greater than the 3rd element in the results arrar
+  add element to the end of the array
+  remove first element of the array
+  continue to next iteration
+if the number is greater than the 2nd element in the results array
+  add element to the 2nd position
+  remove first elmement
+  continue
+if the element is greater than the 1st element in the results array
+  add element after the 1st element
+  remove first element
+  continue
+
+return the first element of the results array.
+
+function thirdMax(input) {
+  if (!Array.isArray(input) || input.length === 0) return 0;
+
+  let results = [0,0,0];
+
+  input.forEach(el => {
+    if (el > results[2]) {
+      results.push(el);
+      results.shift();
+    } else if (el > results[1]) {
+      results.splice(2,0,el);
+      results.shift();
+    } else if (el > results[0]) {
+      results.splice(1, 0, el);
+      results.shift();
+    }
+  })
+  return results[0] || results[2];
+}
+
+console.log(thirdMax([3, 2, 1]));              // 1
+console.log(thirdMax([3, 2, 1, 4]));           // 2
+console.log(thirdMax([2, 1]));                 // 2
+console.log(thirdMax([]));                     // 0
+console.log(thirdMax(''));                     // 0
+
 */
