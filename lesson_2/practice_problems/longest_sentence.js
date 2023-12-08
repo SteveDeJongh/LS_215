@@ -32,26 +32,26 @@ let longText = 'Four score and seven years ago our fathers brought forth' +
 
 // Orignal solution, failed edge case:
 
-function longestSentence(text) {
-  let sentences = text.split(/(?<=[!.?])/g) // Split text after '!', '.' or '?'
-                  .map(sentence => countAndSentenceArray(sentence))
-                  .sort((a,b) => b[0] - a[0])
+// function longestSentence(text) {
+//   let sentences = text.split(/(?<=[!.?])/g) // Split text after '!', '.' or '?'
+//                   .map(sentence => countAndSentenceArray(sentence))
+//                   .sort((a,b) => b[0] - a[0])
 
-  console.log(sentences[0][1]);
-  console.log('');
-  console.log(`The longest sentence has ${sentences[0][0]} words.`);
-}
+//   console.log(sentences[0][1]);
+//   console.log('');
+//   console.log(`The longest sentence has ${sentences[0][0]} words.`);
+// }
 
-function countAndSentenceArray(sentence) {
-  sentence = sentence.trim() // Trim whitespace around string.
-  return [wordCount(sentence), sentence];
-}
+// function countAndSentenceArray(sentence) {
+//   sentence = sentence.trim() // Trim whitespace around string.
+//   return [wordCount(sentence), sentence];
+// }
 
-function wordCount(text) {
-  return text.split(' ').length;
-}
+// function wordCount(text) {
+//   return text.split(' ').length;
+// }
 
-longestSentence(longText);
+// longestSentence(longText);
 
 // Modified solution to handle edge case.
 
@@ -68,7 +68,7 @@ function longestSentence(text) {
     }
   })
 
-  console.log(longestSentences.join(' *OR *'));
+  console.log(longestSentences[0]);
   console.log('');
   console.log(`The longest sentence has ${numOfWords} words.`);
 }
@@ -103,7 +103,7 @@ longestSentence(longText);
 
 // The longest sentence has 30 words.
 
-longestSentence("Hello there! Why  not? Goodbye.");
+longestSentence("Why not? Hello there! Why  not? Goodbye.");
 // expected output:
 // Hello there! *OR* Why  not?
 

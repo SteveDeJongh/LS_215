@@ -166,3 +166,73 @@ console.log(thirdMax([]));                     // 0
 console.log(thirdMax(''));                     // 0
 
 */
+
+// Problem 3
+
+/*
+
+Write a function, primeNumberPrinter, that prints all prime numbers present as substrings in a given string.
+
+Example
+
+primeNumberPrinter("a4bc2k13d"); // [2, 13]
+
+// Problem:
+// input: string
+// output: array of numbers
+// Rules:
+  // Number must be prime to be returned
+
+Questions
+How should the string be split?
+Will the input always be a string?
+Will we always be passed in the correct number of arguments?
+Will the passed in string always contain numbers?
+If there are no matches, what should we return?
+What is a prime number?
+Will the string consist of only alphabetical and numerical characters?
+
+Examples:
+
+primeNumberPrinter("a4bc2k13d"); // [2, 13]
+primeNumberPrinter("a1b2c3d4"); // [1,2,3]
+primeNumberPrinter("abcd"); // []
+primeNumberPrinter([]); // "Invalid Input"
+
+
+Data Structure:
+String, array, integers
+
+Algorithm:
+check if input is valid, if it isn't, return a string saying so.
+extract all number sequences from the passed in string
+filter the extracted numbers down to prime numbers only
+  helper function `isPrime`
+
+
+Helper:
+  check if number is equally divisble by any number from number / 2 down.
+  if it is, return false
+  otherwise true
+
+function primeNumberPrinter(input) {
+  if (typeof(input) !== "string") return "Invalid input."
+
+  let numbers = (input.match(/[0-9]+/g) || []).map(x => Number(x))
+  return numbers.filter(x => isPrime(x))
+}
+
+function isPrime(num) {
+  if (num <= 1) return false;
+  for (let div = Math.floor(num / 2); div > 1; div -= 1) {
+    if (num % div === 0) return false;
+  }
+  return true;
+}
+
+console.log(primeNumberPrinter("a4bc2k13d")); // [2, 13]
+console.log(primeNumberPrinter("a1b2c3d4")); // [2,3]
+console.log(primeNumberPrinter("abcd")); // []
+console.log(primeNumberPrinter([])); // "Invalid Input"
+
+*/
