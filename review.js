@@ -236,3 +236,71 @@ console.log(primeNumberPrinter("abcd")); // []
 console.log(primeNumberPrinter([])); // "Invalid Input"
 
 */
+
+// Problem 4
+
+/*
+​Write a function that takes a two-dimensional array as the argument and turns it into a flat array with all duplicated elements removed. Treat numbers and number strings (e.g., 1 and '1') as duplicates, and keep the one that comes first in the result.
+
+Examples
+
+flattenAndUnique([]); // []
+flattenAndUnique([[1, 2, 3], ['3', 4, 5, 'a']]); // [1, 2, 3, 4, 5, 'a']
+
+// Problem:
+// Input: Multi dimensional array
+// Output: array with all duplicate items removed
+// Rules:
+  // flatten the array 1 level deep
+  // Return the a new array with only unique elements
+    // return the first instance of the unique element
+    // a char and string reprensation of the same number are equal.
+
+Questions:
+How do we define duplicates?
+Will we always be passed in a multi dimensional array?
+How do we handle invalid entries?
+
+// Examples:
+flattenAndUnique([]); // []
+flattenAndUnique([[1, 2, 3], ['3', 4, 5, 'a']]); // [1, 2, 3, 4, 5, 'a']
+flattenAndUnique([[1, 2, 3], ['1', '2', 4]] // [1,2,3,4]
+
+// Data Structure:
+array of elements
+
+// Algorithm:
+create results array
+flatten input array 1 times
+iterate over flattened array
+  check if current element exists in the results array
+    if it doesn't add element to results array
+
+Helper for checking if it exists in array
+check if any of the elements in the array
+  are equal to the current element converted to string
+  or
+  are equal to the current element converted to a number
+
+*/
+
+function flattenAndUnique(input) {
+  let results = [];
+  input = input.flat();
+
+  input.forEach(el => {
+    if (!exists(el, results)) {
+      results.push(el);
+    }
+  })
+
+  return results;
+}
+
+function exists(el, array) {
+  return array.some(test => test === String(el)) || array.some(test => test === Number(el))
+}
+
+console.log(flattenAndUnique([])); // []
+console.log(flattenAndUnique([[1, 2, 3], ['3', 4, 5, 'a']])); // [1, 2, 3, 4, 5, 'a']
+console.log(flattenAndUnique([[1, 2, 3], ['1', '2', 4]])); // [1,2,3,4]
