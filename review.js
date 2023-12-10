@@ -282,8 +282,6 @@ check if any of the elements in the array
   or
   are equal to the current element converted to a number
 
-*/
-
 function flattenAndUnique(input) {
   let results = [];
   input = input.flat();
@@ -304,3 +302,5 @@ function exists(el, array) {
 console.log(flattenAndUnique([])); // []
 console.log(flattenAndUnique([[1, 2, 3], ['3', 4, 5, 'a']])); // [1, 2, 3, 4, 5, 'a']
 console.log(flattenAndUnique([[1, 2, 3], ['1', '2', 4]])); // [1,2,3,4]
+
+*/
