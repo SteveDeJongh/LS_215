@@ -394,8 +394,6 @@ console.log(median(quarter2ExamScores) === 89.5);
 console.log(median(quarter3ExamScores) === 87);
 console.log(median(quarter4ExamScores) === 89.5);
 
-*/
-
 // 10 Weekday Classes
 
 const TODAY = toDate("2018-08-05");
@@ -405,7 +403,11 @@ function toDate(string) {
 }
 
 function toString(date) {
-  return `${date.getYear()}-${date.getMonth()}-${date.getDay()}`;
+  // return `${date.getYear()}-${date.getMonth()}-${date.getDay()}`;
+  return `${date.getFullYear()}-${String((date.getMonth()+1)).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  // `getDay()` returns the weekday, we need `getDate()`
+  // need to use `getFullYear()` to get the year
+  // Need to ensure we have leading 0's for single digit months and days.
 }
 
 function isInThePast(date) {
@@ -441,7 +443,11 @@ const offeredClasses = {
 
 function getCompatibleEvents(classes, calendar) {
   function isAvailable(date) {
+    console.log(date);
+
     const dateStr = toString(date);
+    console.log(dateStr);
+
     return !calendar[dateStr] || calendar[dateStr].length === 0;
   };
 
@@ -464,3 +470,46 @@ function getCompatibleEvents(classes, calendar) {
 
 console.log(getCompatibleEvents(offeredClasses, myCalendar));
 // expected: ["Mike's Hikes", "Powerboating 101"]
+
+*/
+// 11 Pomodoro
+
+var tasks = 10;
+var checkmarks = 0;
+var sessions = 0;
+var minutes = 0;
+
+function pomodoro() {
+  console.log('Work.');
+
+  while (minutes < 25) {
+    minutes += 1;
+    console.log('...' + minutes);
+  }
+
+  console.log('PLING!');
+
+  sessions += 1;
+  checkmarks += 1;
+
+  if (checkmarks === tasks) {
+    console.log('Done!');
+    return;
+  }
+
+  var rest;
+  if (sessions === 4) {
+    sessions = 0;
+    rest = 30;
+  } else {
+    rest = 5;
+  }
+
+  console.log('Rest for ' + rest + ' minutes.');
+
+  // var minutes = 0; // using the var keyword initialies a new `minutes` variable local to the `pomodoro` function scope. As it's initialy set to "undefined" due to hoisting, the while condition never evaluates to truthy;
+  minutes = 0;
+  pomodoro();
+}
+
+pomodoro();
