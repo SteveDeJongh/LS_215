@@ -141,8 +141,6 @@ addTask('homework');
 completeTasks(3);
 displayTaskList();
 
-*/
-
 // 5 Range
 
 function range(start, end) {
@@ -155,11 +153,70 @@ function range(start, end) {
   return range;
 }
 
-function range(end) {
-  return range(0, end);
+function range(end) { // This function definiton overrides the previous `range` function
+  return range(0, end);   // results in this function calling itself over and over again.
 }
 
 // Examples
 
 console.log(range(10, 20));
 console.log(range(5));
+
+// Solution
+
+function range(start, end) {
+  if (arguments.length === 1) {
+    end = start;
+    start = 0;
+  }
+
+  const range = [];
+  for (let element = start; element <= end; element++) {
+    range.push(element);
+  }
+
+  return range;
+}
+
+// Examples
+
+console.log(range(10, 20));
+console.log(range(5));
+
+// 6 Member Directory
+
+const memberDirectory = {
+  'Jane Doe': '323-8293',
+  'Margaret Asbury': '989-1111',
+  'Callum Beech': '533-9090',
+  'Juanita Eastman': '424-1919',
+};
+
+function isValidName(name) {
+  // return (/^\w+ \w+$/).test(name); // `\w` includes number characters. We need to match [a-z] instead and add a flag for being case insensitive.
+  return (/^[a-z]+ [a-z]+$/i).test(name);
+}
+
+function isValidPhone(phone) {
+  return (/^\d{3}-\d{4}$/).test(phone);
+}
+
+function validMemberInfo(name, phone) {
+  return isValidName(name) && isValidPhone(phone);
+}
+
+function addMember(name, phone) {
+  if (validMemberInfo(name, phone)) {
+    memberDirectory[name] = phone;
+  } else {
+    console.log('Invalid member information.');
+  }
+}
+
+addMember('Laura Carlisle', '444-2223');
+addMember('Rachel Garcia', '232-1191');
+addMember('Earl 5mith', '331-9191');
+
+console.log(memberDirectory);
+
+*/
