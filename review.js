@@ -304,3 +304,179 @@ console.log(flattenAndUnique([[1, 2, 3], ['3', 4, 5, 'a']])); // [1, 2, 3, 4, 5,
 console.log(flattenAndUnique([[1, 2, 3], ['1', '2', 4]])); // [1,2,3,4]
 
 */
+
+// Practice Problem start 2:45 - 3:18 30 minutes.
+
+// You are given a table, in which every key is a stringified number, and each 
+// corresponding value is an array of characters, e.g.
+
+// {
+//   "1": ["A", "B", "C"],
+//   "2": ["A", "B", "D", "A"],
+// }
+// Create a function that returns a table with the same keys, but each 
+// character should appear only once among the value-arrays, e.g.
+
+// {
+//   "1": ["C"],
+//   "2": ["A", "B", "D"],
+// }
+// Rules
+// Whenever two keys share the same character, they should be compared numerically, 
+// and the larger key will keep that character. That's why in the example above the 
+// array under the key "2" contains "A" and "B", as 2 > 1.
+// If duplicate characters are found in the same array, the first occurance should be kept.
+
+// Example 1
+// input = {
+//   "1": ["C", "F", "G"],
+//   "2": ["A", "B", "C"],
+//   "3": ["A", "B", "D"],
+// }
+
+// output = {
+//   "1": ["F", "G"],
+//   "2": ["C"],
+//   "3": ["A", "B", "D"],
+// }
+
+// Example 2
+// input = {
+//   "1": ["A"],
+//   "2": ["A"],
+//   "3": ["A"],
+// }
+
+// output = {
+//   "1": [],
+//   "2": [],
+//   "3": ["A"],
+// }
+
+// Example 3
+// input = {
+//   "432": ["A", "A", "B", "D"],
+//   "53": ["L", "G", "B", "C"],
+//   "236": ["L", "A", "X", "G", "H", "X"],
+//   "11": ["P", "R", "S", "D"],
+// }
+
+// output = {
+//   "11": ["P", "R", "S"],
+//   "53": ["C"],
+//   "236": ["L", "X", "G", "H"],
+//   "432": ["A", "B", "D"],
+// }
+
+/*
+Input: object, keys are string numbers, value are arrays of letters.
+Output: object, keys are string numbers, values are arrays of letters.
+
+Rules:
+letters can only appear once in all of the value arrays
+  letter should only remain in the array which holds it with the highest numerical value.
+Object keys are to be compared as numbers, not strings
+    ie: "33" < "123" // true;
+
+Questions:
+  Will the input always be an object?
+  Will the number keys always be unique?
+  Can the object only have one key?
+  Will the characters always be upper case?
+
+Data structure:
+input: object
+output: object
+
+Arrays for string characters
+
+Algorithm:
+get an array of all of the objects keys
+
+loop over the objects keys
+    access the array of characters for each key
+      loop over each character
+        check all other arrays of characters for that value
+          if the character is found
+            check if current object key is greater than found object key.
+              if it is, do nothing
+              if it isn't, remove the elemtn from the current array.
+
+*/
+
+function letterKeys(input) {
+  let numStrings = Object.keys(input);
+
+  numStrings.forEach(nStr => {
+    let letters = input[nStr];
+
+    letters = letters.filter(letter => {
+      for (let i = 0; i < numStrings.length; i += 1) {
+        if (input[numStrings[i]].includes(letter)) {
+          if (Number(numStrings[i]) > nStr) {
+            return false;
+          }
+        }
+      }
+      return true;
+    });
+
+    for (let i = 0; i < letters.length; i += 1) {
+      if (letters.filter(x => letters[i] === x).length > 1) {
+        letters.splice(letters.lastIndexOf(letters[i]), 1);
+        i -= 1;
+      }
+    }
+
+    input[nStr] = letters
+  })
+
+  return input;
+}
+
+// Example 1
+let input = {
+  "1": ["C", "F", "G"],
+  "2": ["A", "B", "C"],
+  "3": ["A", "B", "D"],
+}
+
+// output = {
+//   "1": ["F", "G"],
+//   "2": ["C"],
+//   "3": ["A", "B", "D"],
+// }
+
+// console.log(letterKeys(input));
+
+// Example 2
+let input2 = {
+  "1": ["A"],
+  "2": ["A"],
+  "3": ["A"],
+}
+
+// output = {
+//   "1": [],
+//   "2": [],
+//   "3": ["A"],
+// }
+
+// console.log(letterKeys(input2));
+
+// Example 3
+let input3 = {
+  "432": ["A", "A", "B", "D"],
+  "53": ["L", "G", "B", "C"],
+  "236": ["L", "A", "X", "G", "H", "X"],
+  "11": ["P", "R", "S", "D"],
+}
+
+// output = {
+//   "11": ["P", "R", "S"],
+//   "53": ["C"],
+//   "236": ["L", "X", "G", "H"],
+//   "432": ["A", "B", "D"],
+// }
+
+console.log(letterKeys(input3));

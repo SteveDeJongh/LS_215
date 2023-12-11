@@ -471,7 +471,6 @@ function getCompatibleEvents(classes, calendar) {
 console.log(getCompatibleEvents(offeredClasses, myCalendar));
 // expected: ["Mike's Hikes", "Powerboating 101"]
 
-*/
 // 11 Pomodoro
 
 var tasks = 10;
@@ -513,3 +512,5 @@ function pomodoro() {
 }
 
 pomodoro();
+
+*/
