@@ -89,16 +89,23 @@ function toggleSwitches(switches, count) {
   return switches;
 }
 
+// function whitchLightsAreOn(switches) {
+//   let result = [];
+
+//   switches.forEach(light => {
+//     if (light[1]) {
+//       result.push(light[0])
+//     }
+//   })
+
+//   return result;
+// }
+
+// Alternative implementation of `whitchlightsareon`
 function whitchLightsAreOn(switches) {
-  let result = [];
-
-  switches.forEach(light => {
-    if (light[1]) {
-      result.push(light[0])
-    }
-  })
-
-  return result;
+  return switches.filter(light => {
+    return light[1]
+  }).map(x => x[0]);
 }
 
 console.log(nthLight(100)); // [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
