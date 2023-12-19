@@ -14,6 +14,7 @@ Rules:
 Questions:
   Will the input always be 2 strings?
   Will the keyword always be lowercase?
+  Will the keyword walys only consist of alphabetical characters?
   Will the keyword ever be longer than the text?
 
 Examples:
@@ -107,3 +108,8 @@ function vigenereCipher(text, keyword) {
 }
 
 console.log(vigenereCipher("Pineapples don't go on pizzas!", 'meat')); // Bmnxmtpeqw dhz'x gh ar pbldal!
+
+console.log(vigenereCipher("Pineapples don't go on pizzas!", 'A')); // Pineapples don't go on pizzas!
+console.log(vigenereCipher("Pineapples don't go on pizzas!", 'Aa')); // Pineapples don't go on pizzas!
+console.log(vigenereCipher("Pineapples don't go on pizzas!", 'cab')); // Riogaqrlfu dpp't hq oo riabat!
+console.log(vigenereCipher("Dog", 'Rabbit')); // Uoh
