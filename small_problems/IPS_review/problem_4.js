@@ -88,8 +88,8 @@ function caesarEncrypt(string, num) {
     let letterIndex = letters.findIndex(x => x === char.toLowerCase());
     letterIndex += num;
 
-    if (letterIndex > 25) {
-      letterIndex = letterIndex % 26;
+    if (letterIndex >= letters.length) {
+      letterIndex = letterIndex % letters.length;
     }
 
     let resChar = letters[letterIndex];
@@ -124,3 +124,4 @@ console.log(caesarEncrypt('There are, as you can see, many punctuations. Right?;
 
 console.log(caesarEncrypt([]));           // invalid input
 console.log(caesarEncrypt("asa", "asa")); // invalid input
+console.log(caesarEncrypt('a'));          // invalid input
