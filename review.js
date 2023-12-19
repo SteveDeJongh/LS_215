@@ -122,9 +122,9 @@ Array
 
 Algorithm:
 check if input is valid, if not, return 0
-initialize a largest variable to an empty array of three 0s
+declare a `largest` variable to an empty array of three 0s
 iterate over each element in passed in array.
-If the number is greater than the 3rd element in the results arrar
+If the number is greater than the 3rd element in the results array
   add element to the end of the array
   remove first element of the array
   continue to next iteration
